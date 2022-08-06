@@ -115,9 +115,3 @@ struct lst{
     }
 };
 
-int main(){
-    lst<int> x = {1,2,3,4,5,6,7,8,9,10};
-    x.print();
-    x.reverse(5,x.size-3);
-    x.print();
-}
