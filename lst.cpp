@@ -84,23 +84,40 @@ struct lst{
         for(int i=0;i<ind-1;i++) temp = temp->next;
         temp->next = temp->next->next;
     }
+    node<T>* ithNode(int i){
+        if(i<0||i>size) return NULL;
+        int count = 0;
+        auto temp = head;
+        while(count<i) {
+            count++;
+            temp = temp->next;
+        }
+        return temp;
+    }
     void reverse(int l, int r){
-        
+        if(l<0||r<0||l>size||r>size||l>=r) {
+            cout << "Invalid arguments provided for reverse list function\n";
+            return;
+        }
+        node<T> *first = NULL, *second = ithNode(l), *last = ithNode(r), *temp;
+        while(second!=last){
+            temp = second->next;
+            second->next = first;
+            first = second;
+            second = temp;
+        }
+        if(l==0) head = first;
+        else ithNode(l-1)->next = first;
+        for(auto temp = first; temp!=NULL; temp=temp->next) if(temp->next == NULL) {
+            temp->next = last;
+            return;
+        }
     }
 };
 
 int main(){
-    lst<int> x = {1,2,3,4,5};
+    lst<int> x = {1,2,3,4,5,6,7,8,9,10};
     x.print();
-    for(int i=0;i<6;i++) {
-        x.insertAt(i+9,i);
-        x.print();
-    }
-    x.insertAt(x.size, x.size);
+    x.reverse(5,x.size-3);
     x.print();
-    cout << "#####################################\n";
-    for(int i=0;i<x.size;i++) {
-        x.deleteAt(i);
-        x.print();
-    }
 }
